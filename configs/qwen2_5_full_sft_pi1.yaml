@@ -1,0 +1,53 @@
+### model
+model_name_or_path: /nfs/nfs-home/siyuan/open-r1/models/Qwen2.5-Math-1.5B
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+use_dft_loss: false
+finetuning_type: full
+deepspeed: examples/deepspeed/ds_z3_config.json  # choices: [ds_z0_config.json, ds_z2_config.json, ds_z3_config.json]
+
+### dataset
+dataset: pi1_r128
+eval_dataset: pi1_r128_val
+template: qwen
+cutoff_len: 8192
+max_samples: 200000
+overwrite_cache: true
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+
+### output
+output_dir: /data_server4/siyuan/token_selection/saves/Qwen2.5-Math-1.5B_pi1_sft_lr1e-5
+logging_steps: 10
+save_steps: 20
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: wandb # choices: [none, wandb, tensorboard, swanlab, mlflow]
+run_name: sft-qwen2.5base-pi1_sft_lr1e-5
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 1e-5
+num_train_epochs: 1.0
+lr_scheduler_type: cosine
+bf16: true
+warmup_ratio: 0.1
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+gradient_checkpointing: true
+flash_attn: fa2
+packing: false
+rl_model_name: /nfs/nfs-home/siyuan/open-r1/models/OneShotRLVR
+max_clip_value: 6.0
+min_clip_value: 1.0
+rl_reweighting_temperature: 5.0
+prob_bound: 0.1
+processed_dataset_cache_path: /nfs/nfs-home/siyuan/LLaMA-Factory/cache_datasets/processed_dataset_module_pi1_OneShotRLVR.pkl
+
+per_device_eval_batch_size: 1
+eval_strategy: steps
+eval_steps: 500
