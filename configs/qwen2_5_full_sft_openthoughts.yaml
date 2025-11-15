@@ -1,16 +1,16 @@
 ### model
-model_name_or_path: /nfs/nfs-home/siyuan/open-r1/models/Qwen2.5-Math-1.5B
+model_name_or_path: /nfs/nfs-home/siyuan/open-r1/models/Qwen2.5-1.5B
 trust_remote_code: true
 
 ### method
 stage: sft
 do_train: true
-use_dft_loss: true
+use_dft_loss: false
 finetuning_type: full
 deepspeed: examples/deepspeed/ds_z3_config.json  # choices: [ds_z0_config.json, ds_z2_config.json, ds_z3_config.json]
-bf16: true
+
 ### dataset
-dataset: open_r1_math
+dataset: open_thoughts_math
 template: qwen
 cutoff_len: 8192
 max_samples: 200000
@@ -19,24 +19,26 @@ preprocessing_num_workers: 16
 dataloader_num_workers: 4
 
 ### output
-output_dir: /data_server5_0/siyuan/token_selection/saves/Qwen2.5-openr1_dftreg0.5_half_lrconstant1e-5
+output_dir: /data_server5_0/siyuan/token_selection/saves/Qwen2.5Base-open_thoughts_math_sft_drop_prob0.05_lr1e-5
 logging_steps: 10
-save_steps: 1000
+save_steps: 300
 plot_loss: true
 overwrite_output_dir: true
 save_only_model: false
 report_to: wandb # choices: [none, wandb, tensorboard, swanlab, mlflow]
-run_name: Qwen2.5-openr1_dftreg0.5_half_lr1e-5
+run_name: Qwen2.5Base-open_thoughts_math_sft_drop_prob0.05_lr1e-5
 ### train
 per_device_train_batch_size: 1
 gradient_accumulation_steps: 16
 learning_rate: 1e-5
 num_train_epochs: 1.0
 lr_scheduler_type: constant
+bf16: true
 ddp_timeout: 180000000
 resume_from_checkpoint: null
 gradient_checkpointing: true
 flash_attn: fa2
 packing: false
+drop_prob_threshold: 0.05
 use_saved_dataset: true
-processed_dataset_cache_path: /nfs/nfs-home/siyuan/LLaMA-Factory/cache_datasets/openr1_math_qwen_8192_half.pkl
+processed_dataset_cache_path: ./cache_datasets/openthoughts_math.pkl

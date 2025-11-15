@@ -348,6 +348,20 @@
       "system_tag": "system"
     }
   },
+  "open_thoughts_math": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/OpenThoughts-114k/math_data",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
   "open_r1_math": {
     "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/OpenR1-Math-94k/data",
     "formatting": "sharegpt",

@@ -180,3 +180,7 @@ predictions_score.json
 
 *.whl
 *.pkl
+*.parquet
+*.csv
+data/pi1_r128_responses_16000_data
+data/OpenR1-Math-94k

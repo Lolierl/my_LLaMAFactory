@@ -676,6 +676,10 @@ def _dft_cross_entropy(
         loss = weighted_losses.mean()
     return loss
 
+@torch.compile
+def Gaussian(x, mu=0.0, sigma=1.0):
+    return torch.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * (2 * torch.pi) ** 0.5)
+
 def weighted_cross_entropy(
     source: torch.Tensor,
     target: torch.Tensor,
@@ -686,7 +690,13 @@ def weighted_cross_entropy(
     topk = None, 
     topp = None, 
     drop_prob_threshold = None, 
-    use_dft_loss = False
+    use_dft_loss = False, 
+    move_eps = None, 
+    use_clip = False, 
+    Gaussian_mu = None,
+    Gaussian_sigma = None, 
+    use_logits = False, 
+    beta = 0.5
 ) -> torch.Tensor:
     """
     Args:
@@ -710,8 +720,15 @@ def weighted_cross_entropy(
 
     valid_source = source[valid_mask]
     valid_target = target[valid_mask]
-    per_token_loss = F.cross_entropy(valid_source, valid_target, reduction="none")
+    if use_logits:
+        per_token_loss = -valid_source.gather(1, valid_target.unsqueeze(1)).squeeze(1)
+    else:
+        per_token_loss = F.cross_entropy(valid_source, valid_target, reduction="none")
 
+    with torch.no_grad():
+        probs = F.softmax(valid_source, dim=-1)                
+        entropy_per_token = -torch.sum(probs * torch.log(probs + 1e-10), dim=-1)
+        avg_entropy = entropy_per_token.mean().detach().item() 
     if topk != None:
         topk_probs, topk_idx = torch.topk(valid_source, k=topk, dim=-1)
         target_expanded = valid_target.unsqueeze(1).expand_as(topk_idx)
@@ -770,11 +787,25 @@ def weighted_cross_entropy(
             weight_diff = torch.ones_like(p_theta)  ### sft
         
         if drop_prob_threshold is not None:
-            weight_diff = torch.where(
-                p_theta >= drop_prob_threshold,
-                weight_diff,
-                torch.tensor(0.0, device=p_theta.device, dtype=p_theta.dtype)
-            )
+            if use_clip:
+                weight_diff = torch.where(
+                    p_theta >= drop_prob_threshold,
+                    weight_diff,
+                    p_theta / drop_prob_threshold
+                )
+            else:
+                weight_diff = torch.where(
+                    p_theta >= drop_prob_threshold,
+                    weight_diff,
+                    torch.tensor(0.0, device=p_theta.device, dtype=p_theta.dtype)
+                )
+        
+        if move_eps is not None:
+            weight_diff = p_theta / (p_theta + move_eps)
+        
+        if Gaussian_mu is not None and Gaussian_sigma is not None:
+            gaussian_weights = Gaussian(p_theta, mu=Gaussian_mu, sigma=Gaussian_sigma)
+            weight_diff = p_theta * gaussian_weights
         #weight_diff = torch.where(
         #    valid_weights2 >= valid_weights - 0.5,
         #    torch.tensor(1.0, device=p_theta.device, dtype=p_theta.dtype),
@@ -798,9 +829,12 @@ def weighted_cross_entropy(
         loss = total_loss / num_items_in_batch
     else: 
         loss = total_loss
+    if(beta > 0):
+        loss = loss - beta * (entropy_per_token.mean())
     return loss, {
         "original_loss": valid_losses.mean().detach().item(),
-        "weighted_loss": loss.detach().item()
+        "weighted_loss": loss.detach().item(), 
+        "avg_entropy": avg_entropy
     }
 
 def weighted_loss_func(outputs, labels, weights, weights2 = None, num_items_in_batch=None, topk = None, topp = None, drop_prob_threshold = None, use_dft_loss = False):

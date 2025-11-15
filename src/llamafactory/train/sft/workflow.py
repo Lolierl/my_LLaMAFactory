@@ -55,8 +55,8 @@ def run_sft(
         with open(processed_dataset_cache_path, 'rb') as f:
             dataset_module = pickle.load(f)
     else:
+        dataset_module = get_dataset(template, model_args, data_args, training_args, stage="sft", **tokenizer_module)
         if processed_dataset_cache_path is not None:
-            dataset_module = get_dataset(template, model_args, data_args, training_args, stage="sft", **tokenizer_module)
             with open(processed_dataset_cache_path, 'wb') as f:
                 pickle.dump(dataset_module, f)
     model = load_model(tokenizer, model_args, finetuning_args, training_args.do_train)

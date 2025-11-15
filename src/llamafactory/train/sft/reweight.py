@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 from datasets import Dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from logging import getLogger
-from ...hparams import RLreweightingArguments
 from tqdm import tqdm
 import torch.nn.functional as F
 import os
@@ -20,22 +19,22 @@ def print_gpu_mem(tag=""):
         print("[GPU Mem] CUDA not available")
 
 class RLWeightCalculator:
-    def __init__(self, args: RLreweightingArguments):
-        self.args = args
+    def __init__(self, rl_model_name: str):
+        self.rl_model_name = rl_model_name
         self.rl_model = None
         self.rl_tokenizer = None
-        
-        if args.rl_model_name is not None:
+
+        if self.rl_model_name is not None:
             self._load_rl_model()
     
     def _load_rl_model(self):
         """Load RL model and tokenizer"""
-        logger.info(f"Loading RL model: {self.args.rl_model_name}")
-        self.rl_tokenizer = AutoTokenizer.from_pretrained(self.args.rl_model_name, use_fast=True)
+        logger.info(f"Loading RL model: {self.rl_model_name}")
+        self.rl_tokenizer = AutoTokenizer.from_pretrained(self.rl_model_name, use_fast=True)
         
         with torch.no_grad():
             self.rl_model = AutoModelForCausalLM.from_pretrained(
-                self.args.rl_model_name
+                self.rl_model_name
         ).to(torch.device("cuda" if torch.cuda.is_available() else "cpu"))
         
         self.rl_model.eval()
@@ -124,13 +123,11 @@ class RLWeightCalculator:
 
 def calculate_and_add_weights(
     dataset_module: Dict[str, Dataset],
-    args
+    rl_model_name: str
 ) -> Dict[str, Dataset]:
     """Convenience function to calculate and add weights to dataset"""
-    if args.rl_model_name is None:
-        return dataset_module
-    
-    weight_calculator = RLWeightCalculator(args)
+
+    weight_calculator = RLWeightCalculator(rl_model_name)
     return weight_calculator.add_weights_to_dataset(dataset_module)
 
 if __name__ == "__main__":
@@ -139,25 +136,19 @@ if __name__ == "__main__":
     output_dir = "./cache_datasets"
     os.makedirs(output_dir, exist_ok=True)
 
-    dataset_cache_path = os.path.join(output_dir, "dataset_module_pi1.pkl")
+    dataset_cache_path = os.path.join(output_dir, "openr1_math_qwen_8192.pkl")
     with open(dataset_cache_path, 'rb') as f:
         dataset_module = pickle.load(f)
     print("Dataset module loaded from cache")
 
-    RLreweighting_args = RLreweightingArguments(
-        rl_model_name="/nfs/nfs-home/siyuan/open-r1/models/OneShotRLVR",
-        max_clip_value=6,
-        min_clip_value=0.1,
-        rl_reweighting_temperature=0.6,
-    )
-    processed_dataset_module = calculate_and_add_weights(dataset_module, RLreweighting_args)
+    rl_model_name="/data_server4/siyuan/token_selection/saves/Qwen2.5-Base-sft_topk_2_drop"
+    processed_dataset_module = calculate_and_add_weights(dataset_module, rl_model_name)
 
-    processed_dataset_cache_path = os.path.join(output_dir, "processed_dataset_module_pi1_OneShotRLVR.pkl")
+    processed_dataset_cache_path = os.path.join(output_dir, "/nfs/nfs-home/siyuan/LLaMA-Factory/cache_datasets/openr1_math_qwen_8192_sfted_droptopk2.pkl")
     with open(processed_dataset_cache_path, 'wb') as f:
         pickle.dump(processed_dataset_module, f)
     print(f"Processed dataset module cached at: {processed_dataset_cache_path}")
 
-    processed_dataset_cache_path = os.path.join(output_dir, "processed_dataset_module_pi1_OneShotRLVR.pkl")
     with open(processed_dataset_cache_path, 'rb') as f:
         dataset_module = pickle.load(f)
     for dataset_name, dataset in dataset_module.items():
