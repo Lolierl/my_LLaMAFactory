@@ -696,7 +696,7 @@ def weighted_cross_entropy(
     Gaussian_mu = None,
     Gaussian_sigma = None, 
     use_logits = False, 
-    beta = 0.5
+    beta = 0
 ) -> torch.Tensor:
     """
     Args:

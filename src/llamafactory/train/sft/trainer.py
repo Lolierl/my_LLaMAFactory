@@ -41,7 +41,9 @@ if TYPE_CHECKING:
 
     from ...hparams import FinetuningArguments
 
-
+from accelerate.utils import (
+    DistributedType
+)
 logger = logging.get_logger(__name__)
 
 
@@ -87,6 +89,7 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
         #self.kmin = 1
         #self.decay_rate = 3
         self.switch_ratio = None
+        self.last_switch_step = 0
         self.compute_loss_func = weighted_loss_func
 
     @override
@@ -109,6 +112,35 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
 
         return super()._get_train_sampler(*args, **kwargs)
 
+    @override
+    def log(self, logs: dict[str, float], start_time: Optional[float] = None) -> None:
+        """
+        Log `logs` on the various objects watching training.
+
+        Subclass and override this method to inject custom behavior.
+
+        Args:
+            logs (`dict[str, float]`):
+                The values to log.
+            start_time (`Optional[float]`):
+                The start of training.
+        """
+        if self.state.epoch is not None:
+            logs["epoch"] = self.state.epoch
+        if self.args.include_num_input_tokens_seen:
+            logs["num_input_tokens_seen"] = self.state.num_input_tokens_seen
+            if start_time is not None:
+                logs.update(speed_metrics("train", start_time, num_tokens=self.state.num_input_tokens_seen))
+        if "loss" in logs:
+            print("loss:", logs["loss"]) 
+            if(logs["loss"] < 0.02): 
+                self.last_switch_step = self.state.global_step
+                self.finetuning_args.use_dft_loss = False
+            else:
+                self.finetuning_args.use_dft_loss = True
+        output = {**logs, **{"step": self.state.global_step}}
+        self.state.log_history.append(output)
+        self.control = self.callback_handler.on_log(self.args, self.state, self.control, logs)
     @override
     def compute_loss(
         self,
@@ -137,7 +169,7 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
         make sure to overwrite `self.model_accepts_loss_kwargs` to `False`. Otherwise, the loss calculationg might be slightly inacurate when performing gradient accumulation.
         """
         state_epoch = getattr(self, "state", None) and getattr(self.state, "epoch", None)
-
+        global_step = getattr(self, "state", None) and getattr(self.state, "global_step", None)
 
         if (self.label_smoother is not None or (self.compute_loss_func is not None and (self.switch_ratio is None or state_epoch > self.switch_ratio))) and "labels" in inputs:
             labels = inputs.pop("labels")
@@ -150,7 +182,9 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
                 kwargs["num_items_in_batch"] = num_items_in_batch
             inputs = {**inputs, **kwargs}
         outputs = model(**inputs)
-
+        drop_topk = self.finetuning_args.drop_topk
+        drop_prob_threshold = self.finetuning_args.drop_prob_threshold
+        use_dft_loss = self.finetuning_args.use_dft_loss
         # Save past state if it exists
         # TODO: this needs to be fixed and made cleaner later.
         if self.args.past_index >= 0:
@@ -167,9 +201,7 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
                 #    weights2 = None
                 weights = None
                 weights2 = None
-                drop_topk = self.finetuning_args.drop_topk
-                drop_prob_threshold = self.finetuning_args.drop_prob_threshold
-                use_dft_loss = self.finetuning_args.use_dft_loss
+
                 #if kmax is not None and kmin is not None:
                 #    #topk = kmax - int((kmax - kmin) * state_epoch)
                 #    topk = kmin + int((kmax - kmin) * (np.exp(-decay_rate * state_epoch) - np.exp(-decay_rate)) / (1 - np.exp(-decay_rate)))
