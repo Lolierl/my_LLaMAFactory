@@ -1,0 +1,43 @@
+### model
+model_name_or_path: /data_server5_0/siyuan/token_selection/saves/Qwen2.5Math-iGSM_2to8_2000each_2048_lr5e-5_1epoch
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+use_dft_loss: true
+finetuning_type: full
+deepspeed: examples/deepspeed/ds_z3_config.json  # choices: [ds_z0_config.json, ds_z2_config.json, ds_z3_config.json]
+bf16: true
+### dataset
+dataset: iGSM_12_3000
+template: qwen
+cutoff_len: 2048
+max_samples: 400000
+overwrite_cache: true
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+
+### output
+output_dir: /data_server5_0/siyuan/token_selection/saves/Qwen2.5Math-dft-iGSM_12_3000_lr1e-5_3epoch
+logging_steps: 10
+save_steps: 41000
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: wandb # choices: [none, wandb, tensorboard, swanlab, mlflow]
+run_name: Qwen2.5Math-dft-iGSM_12_3000_lr1e-5_3epoch
+### train
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 2
+learning_rate: 1e-5
+num_train_epochs: 3.0
+warmup_ratio: 0.03
+lr_scheduler_type: cosine
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+gradient_checkpointing: true
+flash_attn: fa2
+packing: false
+use_saved_dataset: false
+# processed_dataset_cache_path: /nfs/nfs-home/siyuan/LLaMA-Factory/cache_datasets/iGSM_12_3000.pkl

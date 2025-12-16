@@ -131,13 +131,13 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
             logs["num_input_tokens_seen"] = self.state.num_input_tokens_seen
             if start_time is not None:
                 logs.update(speed_metrics("train", start_time, num_tokens=self.state.num_input_tokens_seen))
-        if "loss" in logs:
-            print("loss:", logs["loss"]) 
-            if(logs["loss"] < 0.02): 
-                self.last_switch_step = self.state.global_step
-                self.finetuning_args.use_dft_loss = False
-            else:
-                self.finetuning_args.use_dft_loss = True
+        #if "loss" in logs:
+        #    print("loss:", logs["loss"]) 
+        #    if(logs["loss"] < 0.02): 
+        #        self.last_switch_step = self.state.global_step
+        #        self.finetuning_args.use_dft_loss = False
+        #    else:
+        #        self.finetuning_args.use_dft_loss = True
         output = {**logs, **{"step": self.state.global_step}}
         self.state.log_history.append(output)
         self.control = self.callback_handler.on_log(self.args, self.state, self.control, logs)

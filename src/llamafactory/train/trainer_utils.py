@@ -696,7 +696,8 @@ def weighted_cross_entropy(
     Gaussian_mu = None,
     Gaussian_sigma = None, 
     use_logits = False, 
-    beta = 0
+    beta = 0, 
+    use_argmax_loss = False
 ) -> torch.Tensor:
     """
     Args:
@@ -710,9 +711,7 @@ def weighted_cross_entropy(
     Returns:
         加权后的损失值
     """
-    per_token_loss = torch.nn.functional.cross_entropy(
-        source, target, ignore_index=ignore_index, reduction="none"
-    )
+
     
     valid_mask = target != ignore_index
     if not valid_mask.any():
@@ -720,10 +719,12 @@ def weighted_cross_entropy(
 
     valid_source = source[valid_mask]
     valid_target = target[valid_mask]
-    if use_logits:
-        per_token_loss = -valid_source.gather(1, valid_target.unsqueeze(1)).squeeze(1)
-    else:
-        per_token_loss = F.cross_entropy(valid_source, valid_target, reduction="none")
+    with torch.no_grad():
+        original_loss = F.cross_entropy(valid_source, valid_target, reduction="none")
+    if use_argmax_loss:
+        with torch.no_grad():
+            target = source.argmax(dim=-1)
+    per_token_loss = F.cross_entropy(valid_source, valid_target, reduction="none")
 
     with torch.no_grad():
         probs = F.softmax(valid_source, dim=-1)                
@@ -806,6 +807,7 @@ def weighted_cross_entropy(
         if Gaussian_mu is not None and Gaussian_sigma is not None:
             gaussian_weights = Gaussian(p_theta, mu=Gaussian_mu, sigma=Gaussian_sigma)
             weight_diff = p_theta * gaussian_weights
+            weight_diff = weight_diff / weight_diff.mean()
         #weight_diff = torch.where(
         #    valid_weights2 >= valid_weights - 0.5,
         #    torch.tensor(1.0, device=p_theta.device, dtype=p_theta.dtype),
@@ -832,7 +834,7 @@ def weighted_cross_entropy(
     if(beta > 0):
         loss = loss - beta * (entropy_per_token.mean())
     return loss, {
-        "original_loss": valid_losses.mean().detach().item(),
+        "original_loss": original_loss.mean().detach().item(),
         "weighted_loss": loss.detach().item(), 
         "avg_entropy": avg_entropy
     }

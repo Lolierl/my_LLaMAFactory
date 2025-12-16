@@ -136,15 +136,15 @@ if __name__ == "__main__":
     output_dir = "./cache_datasets"
     os.makedirs(output_dir, exist_ok=True)
 
-    dataset_cache_path = os.path.join(output_dir, "openr1_math_qwen_8192.pkl")
+    dataset_cache_path = os.path.join(output_dir, "open_r1_math_94k_full_8192.pkl")
     with open(dataset_cache_path, 'rb') as f:
         dataset_module = pickle.load(f)
     print("Dataset module loaded from cache")
 
-    rl_model_name="/data_server4/siyuan/token_selection/saves/Qwen2.5-Base-sft_topk_2_drop"
+    rl_model_name="/nfs/nfs-home/siyuan/open-r1/models/Qwen2.5-Math-1.5B"
     processed_dataset_module = calculate_and_add_weights(dataset_module, rl_model_name)
 
-    processed_dataset_cache_path = os.path.join(output_dir, "/nfs/nfs-home/siyuan/LLaMA-Factory/cache_datasets/openr1_math_qwen_8192_sfted_droptopk2.pkl")
+    processed_dataset_cache_path = os.path.join(output_dir, "open_r1_math_94k_full_8192_base.pkl")
     with open(processed_dataset_cache_path, 'wb') as f:
         pickle.dump(processed_dataset_module, f)
     print(f"Processed dataset module cached at: {processed_dataset_cache_path}")

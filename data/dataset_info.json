@@ -376,6 +376,384 @@
       "system_tag": "system"
     }
   }, 
+  "open_r1_math_94k": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/OpenR1-Math-94k_full",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_10_500": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_10_500.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_10_1000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_10_1000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_10_2000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_10_2000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_10_3000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_10_3000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_10_4000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_10_4000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_10_5000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_10_5000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_10_10000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_10_10000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_6_1000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_6_1000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_6_2000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_6_2000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_6_3000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_6_3000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_6_4000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_6_4000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_6_5000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_6_5000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_6_10000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_6_10000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_8_1000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_1000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_8_2000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_2000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_8_3000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_3000_new.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_8_4000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_4000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_8_5000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_5000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_8_10000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_10000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_12_1000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_12_1000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_12_2000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_12_2000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_12_3000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_12_3000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_12_4000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_12_4000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_12_5000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_12_5000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_12_10000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_12_10000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_shuffled": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_2to8_2000each_shuffled.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
   "pi1_r128": {
     "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/pi1_r128_responses_16000_data/data",
     "formatting": "sharegpt",
