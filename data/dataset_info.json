@@ -601,7 +601,7 @@
     }
   }, 
   "iGSM_8_3000": {
-    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_3000_new.jsonl",
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_8_3000.jsonl",
     "formatting": "sharegpt",
     "columns": {
       "messages": "messages"
@@ -728,6 +728,90 @@
   }, 
 "iGSM_12_10000": {
     "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_12_10000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_14_1000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_14_1000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_14_2000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_14_2000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_14_3000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_14_3000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_14_4000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_14_4000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+  "iGSM_14_5000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_14_5000.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  }, 
+"iGSM_14_10000": {
+    "file_name": "/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_14_10000.jsonl",
     "formatting": "sharegpt",
     "columns": {
       "messages": "messages"

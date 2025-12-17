@@ -10,7 +10,7 @@ finetuning_type: full
 deepspeed: examples/deepspeed/ds_z3_config.json  # choices: [ds_z0_config.json, ds_z2_config.json, ds_z3_config.json]
 bf16: true
 ### dataset
-dataset: iGSM_12_3000
+dataset: iGSM_14_1000
 template: qwen
 cutoff_len: 2048
 max_samples: 400000
@@ -19,14 +19,14 @@ preprocessing_num_workers: 16
 dataloader_num_workers: 4
 
 ### output
-output_dir: /data_server5_0/siyuan/token_selection/saves/Qwen2.5Math-dft-iGSM_12_3000_lr1e-5_3epoch
+output_dir: /data_server5_0/siyuan/token_selection/saves/Qwen2.5Math-dft-iGSM_14_1000_lr1e-5_3epoch
 logging_steps: 10
 save_steps: 41000
 plot_loss: true
 overwrite_output_dir: true
 save_only_model: false
 report_to: wandb # choices: [none, wandb, tensorboard, swanlab, mlflow]
-run_name: Qwen2.5Math-dft-iGSM_12_3000_lr1e-5_3epoch
+run_name: Qwen2.5Math-dft-iGSM_14_1000_lr1e-5_3epoch
 ### train
 per_device_train_batch_size: 8
 gradient_accumulation_steps: 2
@@ -40,4 +40,4 @@ gradient_checkpointing: true
 flash_attn: fa2
 packing: false
 use_saved_dataset: false
-# processed_dataset_cache_path: /nfs/nfs-home/siyuan/LLaMA-Factory/cache_datasets/iGSM_12_3000.pkl
+# processed_dataset_cache_path: /nfs/nfs-home/siyuan/LLaMA-Factory/cache_datasets/iGSM_8_4000.pkl

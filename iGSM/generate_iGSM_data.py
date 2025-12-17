@@ -24,8 +24,8 @@ def generate_one(id_gen):
 
 def main():
     fix_seed(45354)
-    samples_per_op = 10000
-    max_op_range = [6, 8, 12]
+    samples_per_op = 1000
+    max_op_range = [14]
 
     for max_op in max_op_range:
         output_path = f"/nfs/nfs-home/siyuan/LLaMA-Factory/data/iGSM/iGSM_{max_op}_{samples_per_op}.jsonl"
